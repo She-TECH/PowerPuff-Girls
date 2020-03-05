@@ -15,28 +15,22 @@
 /**
  * Sample access control list.
  */
-rule EverybodyCanReadEverything {
-    description: "Allow all participants read access to all resources"
-    participant: "org.energy.test.SampleParticipant"
-    operation: READ
-    resource: "org.energy.test.*"
+//Residents to have access only to their own account
+rule ResidentAccessOwnRecord {
+    description: "Allow residents to access only their profile"
+    participant(p): "org.energy.test.Resident"
+    operation: READ, UPDATE, DELETE
+    resource(r): "org.energy.test.Resident"
+    condition: (r.getIdentifier() === p.getIdentifier())
     action: ALLOW
 }
 
-rule EverybodyCanSubmitTransactions {
-    description: "Allow all participants to submit transactions"
-    participant: "org.energy.test.SampleParticipant"
-    operation: CREATE
-    resource: "org.energy.test.SampleTransaction"
-    action: ALLOW
-}
-
-rule OwnerHasFullAccessToTheirAssets {
-    description: "Allow all participants full access to their assets"
-    participant(p): "org.energy.test.SampleParticipant"
+//Residents to have read only access to other Residents
+rule ResidentReadAccessResidents {
+    description: "Allow residents read access to other residents"
+    participant: "org.energy.test.Resident"
     operation: ALL
-    resource(r): "org.energy.test.SampleAsset"
-    condition: (r.owner.getIdentifier() === p.getIdentifier())
+    resource: "org.energy.test.Resident"
     action: ALLOW
 }
 
