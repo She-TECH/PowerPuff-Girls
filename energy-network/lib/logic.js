@@ -124,6 +124,21 @@ async function loginValidation(login){
      //let recordFromReg = await user.get(user.energy);
      //userContext.energyVal = recordFromReg.value;
     console.log("@debug UserContext", user.firstName);
+	
+	let qry1 = buildQuery('SELECT org.energy.test.Energy WHERE (ownerID ==_$ownerID)');
+    let results1= await query(qry1, {ownerID: user.residentID});
+    if(results1.length > 0){
+     let energy  = results1[0];
+      userContext.energyValue = energy.value;
+      userContext.saleValue = energy.saleValue;
+    }
+    
+    let qry2 = buildQuery('SELECT org.energy.test.Coins WHERE (ownerID ==_$ownerID)');
+    let results2= await query(qry2, {ownerID: user.residentID});
+    if(results2.length > 0){
+     let coins  = results2[0];
+      userContext.coinsValue = coins.value;
+    }
     
   }
   return userContext;  
