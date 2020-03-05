@@ -1,0 +1,31 @@
+
+
+.navbar2 {
+    background-color: #e9ecf0;
+    color: rgb(12, 10, 10);
+}
+
+.navfont {
+    color: rgb(20, 16, 16);
+}
+
+.navfontAbout {
+    color: rgb(24, 20, 20);
+    font-size: 14px;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+    color: rgb(26, 20, 20);
+}
+
+
+
+.main-wrapper{
+    height: 100%;
+}
+
+.appbackground {  
+    /* background-color: #f0f8ff;  */
+    text-align: center;
+    height: calc(100% - 60px);  
+}
