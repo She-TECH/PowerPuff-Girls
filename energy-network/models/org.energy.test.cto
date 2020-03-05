@@ -56,6 +56,10 @@ concept UserContext {
   o String firstName
   o String lastName
   o String residentID
+  o Double energyValue
+  o Double saleValue
+  o Double coinsValue
+ // o Double energyVal
 }
 
 
