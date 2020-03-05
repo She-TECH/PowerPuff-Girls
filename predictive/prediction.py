@@ -3,7 +3,9 @@ from fbprophet import Prophet
 import numpy as np
 import json
 import datetime
+from flask_cors import CORS
 from flask import Flask
+
 
 df = pd.read_csv('train-Copy.csv')
 
@@ -64,6 +66,7 @@ print(json_dump)
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 @app.route("/prediction", methods=['GET'])
 def hello():
     return json_dump
