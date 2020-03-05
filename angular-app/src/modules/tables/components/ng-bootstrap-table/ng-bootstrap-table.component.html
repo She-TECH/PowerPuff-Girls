@@ -1,0 +1,31 @@
+<form>
+    <table *ngIf="showTable" class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th><span>Name</span></th>
+                <th><span>Energy Units</span></th>
+                <th scope="col" ><span></span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let x of residents | async">
+                <!-- <th >{{ x.residentID }}</th>
+                <td>{{ x.firstName }}</td>
+                <td>{{ x.energy }}</td>
+                <td><button type="button" [disabled]="isDisabled(x)" class="btn btn-outline-primary" (click)="submit(x)">Buy</button></td>-->
+            </tr> 
+            <tr *ngFor="let g of allResidents">
+                <th >{{ g.residentID }}</th>
+                <td>{{ g.firstName }}</td>
+                <td>{{ g.lastName }}</td>
+                <td><button type="button" [disabled]="isDisabled(g)" class="btn btn-outline-primary" (click)="submit(g)">Buy</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-between p-2">
+        <ngb-pagination [collectionSize]="total$ | async" [(page)]="countryService.page" [pageSize]=6></ngb-pagination
+        >
+    </div>
+</form>
+
