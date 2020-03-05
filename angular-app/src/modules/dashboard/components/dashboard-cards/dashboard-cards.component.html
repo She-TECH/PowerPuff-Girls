@@ -1,0 +1,15 @@
+<div class="row">
+    <button  [hidden]="show" style="width: 20%;" type="button" class="btn btn-outline-primary" (click)="onshow();">See User Info</button>
+    <div *ngIf=show style="display: flex;">
+        <div class="col-xl" style="padding: 30px;">
+            <sb-card-view-details link="/dashboard" [textin] = "userEnergy"><div class="card-body">Energy Units available</div></sb-card-view-details>
+        </div>
+        <div class="col-xl" style="padding: 30px;">
+            <sb-card-view-details link="/dashboard" ><div class="card-body">Today's predicted consumption</div></sb-card-view-details>
+        </div>
+        <div class="col-xl" style="padding: 30px;">
+            <sb-card-view-details link="/dashboard" [textin] = "userCoins" ><div class="card-body">Energy Coins available</div></sb-card-view-details>
+        </div>
+    </div>
+    
+</div>
