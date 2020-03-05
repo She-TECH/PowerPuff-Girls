@@ -56,7 +56,7 @@ async function EnergyToCoins(UpdateValues) {
     UpdateValues.coinsInc.value = UpdateValues.coinsInc.value + coinsChange;
     UpdateValues.coinsDec.value = UpdateValues.coinsDec.value - coinsChange;
     UpdateValues.energyInc.value = UpdateValues.energyInc.value + UpdateValues.energyValue;
-    UpdateValues.energyDec.value = UpdateValues.energyDec.value - UpdateValues.energyValue;
+    UpdateValues.energyDec.saleValue = UpdateValues.energyDec.saleValue - UpdateValues.energyValue;
 	
     //get asset registry for Coins and Energy, and update on the ledger
     return getAssetRegistry('org.energy.test.Coins')
