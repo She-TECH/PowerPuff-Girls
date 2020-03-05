@@ -10,3 +10,17 @@ body{
     height: 100%;   
     text-align: center;
 }
+
+@font-face{
+    font-family: siemensFontRoman;
+    src: url('fonts/SiemensSerif_Prof_Roman.ttf')format("opentype");
+}
+
+@font-face{
+    font-family: siemensFontBold;
+    src: url('fonts/SiemensSerif_Prof_Bold.ttf')format("opentype");
+}
+
+*{
+    font-family: siemensFontRoman;
+}

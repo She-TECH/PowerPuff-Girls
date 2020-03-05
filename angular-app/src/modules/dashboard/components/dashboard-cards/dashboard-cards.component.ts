@@ -14,6 +14,7 @@ export class DashboardCardsComponent implements OnInit {
     userInfo;
      userCoins;
      userEnergy;
+     userPrediction;
      show=false;
     
     constructor(private serviceTransaction:TransactionRRService) {}
@@ -26,6 +27,13 @@ export class DashboardCardsComponent implements OnInit {
         }, 3000);
             this.userCoins = UserTransactioncacheService.userCoins;
             this.userEnergy = UserTransactioncacheService.userEnergy;
+            if(UserTransactioncacheService.consumerName=='Shivani')
+            {
+                this.userPrediction=2807.81;
+            }
+            else{
+                this.userPrediction=1100.86;
+            }
             this.show=true;
        
     }
