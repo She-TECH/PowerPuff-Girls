@@ -22,7 +22,7 @@
  * @param {org.energy.test.SampleTransaction} sampleTransaction
  * @transaction
  */
-async function sampleTransaction(tx) {
+/*async function sampleTransaction(tx) {
     // Save the old value of the asset.
     const oldValue = tx.asset.value;
 
@@ -40,4 +40,91 @@ async function sampleTransaction(tx) {
     event.oldValue = oldValue;
     event.newValue = tx.newValue;
     emit(event);
+}*/
+
+/**
+ * Energy to Coins transaction
+ * @param {org.energy.test.EnergyToCoins} UpdateValues 
+ * @transaction
+ */
+async function EnergyToCoins(UpdateValues) {
+
+    //determine change in coins value from the rate
+    var coinsChange = (UpdateValues.energyRate * UpdateValues.energyValue);
+
+    //update values of the assets
+    UpdateValues.coinsInc.value = UpdateValues.coinsInc.value + coinsChange;
+    UpdateValues.coinsDec.value = UpdateValues.coinsDec.value - coinsChange;
+    UpdateValues.energyInc.value = UpdateValues.energyInc.value + UpdateValues.energyValue;
+    UpdateValues.energyDec.value = UpdateValues.energyDec.value - UpdateValues.energyValue;
+	
+    //get asset registry for Coins and Energy, and update on the ledger
+    return getAssetRegistry('org.energy.test.Coins')
+        .then(function (assetRegistry) {
+            return assetRegistry.updateAll([UpdateValues.coinsInc,UpdateValues.coinsDec]);
+        })                
+        .then(function () {
+            return  getAssetRegistry('org.energy.test.Energy')
+            .then(function (assetRegistry) {
+                return assetRegistry.updateAll([UpdateValues.energyInc,UpdateValues.energyDec]);
+            });            
+        });        
+   
+}
+
+/**
+ * Energy to Energy transaction
+ * @param {org.energy.test.EnergyToSell} UpdateValues 
+ * @transaction
+ */
+async function EnergyToSell(UpdateValues) {
+
+  
+  //saleValue=100
+  //energyValue=1000
+  var remainingEnergy= (UpdateValues.updatedEnergy.value - UpdateValues.saleValue);
+  var soldEnergy=UpdateValues.saleValue;
+    //determine change in coins value from the rate
+   // var coinsChange = (UpdateValues.energyRate * UpdateValues.energyValue);
+
+    //update values of the assets
+   // UpdateValues.coinsInc.value = UpdateValues.coinsInc.value + coinsChange;
+   // UpdateValues.coinsDec.value = UpdateValues.coinsDec.value - coinsChange;
+    UpdateValues.updatedEnergy.value = remainingEnergy;
+    UpdateValues.updatedEnergy.saleValue = UpdateValues.updatedEnergy.saleValue + soldEnergy;
+	
+    //get asset registry for Energy, and update on the ledger
+    return getAssetRegistry('org.energy.test.Energy')
+        .then(function (assetRegistry) {
+            return assetRegistry.updateAll([UpdateValues.updatedEnergy]);
+        });    
+   
+}
+
+
+/* Sample transaction
+ * @param {org.energy.test.Login} login
+ * @returns{org.energy.test.UserContext} the return data
+ * @transaction
+ */
+
+async function loginValidation(login){
+  
+  const userContext= getFactory().newConcept('org.energy.test','UserContext');
+
+  let qry = buildQuery('SELECT org.energy.test.Resident WHERE (firstName ==_$firstName)');
+  
+  let results= await query(qry, {firstName: login.firstName});
+  console.log("@debug Login Validation is excuted and result length is ", results.length);
+  if(results.length > 0){
+     let user  = results[0];
+     userContext.firstName = user.firstName;
+     userContext.lastName = user.lastName;
+     userContext.residentID = user.residentID;
+     //let recordFromReg = await user.get(user.energy);
+     //userContext.energyVal = recordFromReg.value;
+    console.log("@debug UserContext", user.firstName);
+    
+  }
+  return userContext;  
 }
