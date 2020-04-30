@@ -30,7 +30,7 @@
     "bootstrap": "^4.4.1",
     "chart.js": "^2.9.3",
     "core-js": "^2.5.7",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "ng2-charts": "^2.3.0",
     "rxjs": "~6.5.4",
     "rxjs-compat": "^6.5.4",
